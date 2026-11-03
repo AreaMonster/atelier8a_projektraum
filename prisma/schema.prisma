@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Projekt {
+  id            String    @id @default(cuid())
+  projektnummer String    @unique
+  projektname   String    @default("")
+  bhName        String    @default("")
+  bhVorname     String    @default("")
+  bhAdresse     String    @default("")
+  bhTelefon     String    @default("")
+  bhMail        String    @default("")
+  parzellenNr   String    @default("")
+  objektadresse String    @default("")
+  objektart     String    @default("") // Neubau | Anbau | Umbau | Sanierung
+  archiviert    Boolean   @default(false)
+  erstelltAm    DateTime  @default(now())
+  geaendertAm   DateTime  @updatedAt
+  raeume        Raum[]
+  eintraege     Eintrag[]
+}
+
+// Raumprogramm
+model Raum {
+  id          String  @id @default(cuid())
+  projektId   String
+  projekt     Projekt @relation(fields: [projektId], references: [id], onDelete: Cascade)
+  bezeichnung String
+  flaecheM2   Float?
+  sortierung  Int
+}
+
+// One row per project and item of config/checkliste.json (Eckdaten and phase items).
+model Eintrag {
+  id        String  @id @default(cuid())
+  projektId String
+  projekt   Projekt @relation(fields: [projektId], references: [id], onDelete: Cascade)
+  itemKey   String
+  status    String  @default("offen") // offen | erledigt | nicht_relevant
+  datum     String? // ISO date YYYY-MM-DD
+  notiz     String?
+  wert      String? // typed value, JSON-encoded
+
+  @@unique([projektId, itemKey])
+}

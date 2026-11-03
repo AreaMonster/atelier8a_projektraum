@@ -1,0 +1,171 @@
+{
+  "_hinweis": [
+    "Struktur der Eckdaten und Phasen des Projektraums.",
+    "label: darf jederzeit geändert werden.",
+    "key: eindeutige ID, NIE ändern oder wiederverwenden – daran hängen die gespeicherten Daten.",
+    "typ: checkliste (Standard), janein, text, zahl, m, m3, chf, datum, datumsbereich, fachplaner.",
+    "gruppe: true = reine Überschrift, der Status ergibt sich aus den Unterpunkten.",
+    "nummeriert: false = Punkt erscheint ohne Nummer.",
+    "Die Nummerierung (1., a., i., 1.) wird automatisch aus der Reihenfolge berechnet."
+  ],
+  "abschnitte": [
+    {
+      "key": "eckdaten",
+      "titel": "Eckdaten Baureglement",
+      "phase": false,
+      "items": [
+        { "key": "eck.bauzone", "label": "Bauzone", "typ": "text" },
+        { "key": "eck.vollgeschosse", "label": "Anzahl Vollgeschosse", "typ": "zahl" },
+        { "key": "eck.grenzabstand_gross", "label": "Grosser Grenzabstand", "typ": "m" },
+        { "key": "eck.grenzabstand_klein", "label": "Kleiner Grenzabstand", "typ": "m" },
+        { "key": "eck.gebaeudehoehe", "label": "Gebäudehöhe", "typ": "m" },
+        { "key": "eck.gesamthoehe", "label": "Gesamtgebäudehöhe (Firsthöhe)", "typ": "m" },
+        {
+          "key": "eck.max_laenge", "label": "Max. Gebäudelänge", "typ": "m",
+          "children": [
+            { "key": "eck.mlz_ab", "label": "Mehrlängenzuschlag ab", "typ": "m" },
+            { "key": "eck.mlz_bemessung", "label": "Bemessung Mehrlängenzuschlag", "typ": "text" }
+          ]
+        },
+        { "key": "eck.max_tiefe", "label": "Max. Gebäudetiefe", "typ": "m" },
+        { "key": "eck.budget", "label": "Budget", "typ": "chf", "nummeriert": false },
+        { "key": "eck.zeitrahmen", "label": "Zeitrahmen", "typ": "datumsbereich", "nummeriert": false }
+      ]
+    },
+    {
+      "key": "projekt",
+      "titel": "Projekt",
+      "phase": true,
+      "items": [
+        { "key": "pr.dossier", "label": "Projektdossier erstellt", "typ": "janein" },
+        { "key": "pr.az_bmz", "label": "AZ-Berechnung / BMZ-Berechnung", "typ": "text" },
+        { "key": "pr.sia116", "label": "SIA 116", "typ": "m3" },
+        { "key": "pr.sia416", "label": "SIA 416", "typ": "m3" },
+        { "key": "pr.det_kosten", "label": "Det. Kosten erstellt", "typ": "janein" },
+        { "key": "pr.besprechung", "label": "Projektbesprechung", "typ": "datum" }
+      ]
+    },
+    {
+      "key": "bauprojekt",
+      "titel": "Bauprojekt",
+      "phase": true,
+      "items": [
+        { "key": "bp.architekturvertrag", "label": "Architekturvertrag" },
+        {
+          "key": "bp.dossier_ueberarbeitet", "label": "Projektdossier überarbeitet", "typ": "janein",
+          "children": [
+            { "key": "bp.sr_ersatzbeitrag", "label": "Schutzraumersatzbeitrag" },
+            { "key": "bp.sr_erstellung", "label": "Schutzraumerstellung ab 25 Pflichtplätzen" }
+          ]
+        },
+        {
+          "key": "bp.fachplaner", "label": "Fachplaner", "gruppe": true,
+          "children": [
+            { "key": "bp.fp_energienachweis", "label": "Energienachweis" },
+            { "key": "bp.fp_geologe", "label": "Geologe" },
+            { "key": "bp.fp_schadstoff", "label": "Schadstoffbeprobung" }
+          ]
+        },
+        {
+          "key": "bp.baugesuch", "label": "Baugesuch", "gruppe": true,
+          "children": [
+            {
+              "key": "bp.bg_formulare", "label": "Formulare", "gruppe": true,
+              "children": [
+                { "key": "bp.bg_gn", "label": "GN" },
+                {
+                  "key": "bp.bg_zusatzformulare", "label": "Zusatzformulare", "gruppe": true,
+                  "children": [
+                    { "key": "bp.bg_objektschutz", "label": "Objektschutz" },
+                    { "key": "bp.bg_sr_ersatzgesuch", "label": "Schutzraumersatzbeitragsgesuch" }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "bp.bg_energienachweis", "label": "Energienachweis erstellt", "typ": "janein",
+              "children": [
+                { "key": "bp.bg_konstruktionsaufbauten", "label": "Definition Konstruktionsaufbauten" }
+              ]
+            },
+            {
+              "key": "bp.bg_schutzraumgesuch", "label": "Schutzraumgesuch",
+              "children": [
+                { "key": "bp.bg_bauingenieur", "label": "Bauingenieur vorhanden", "typ": "janein" },
+                { "key": "bp.bg_architektenplan_50", "label": "Architektenplan 1:50" }
+              ]
+            },
+            { "key": "bp.bg_entsorgungskonzept", "label": "Entsorgungskonzept" },
+            {
+              "key": "bp.bg_architektenplaene", "label": "Architektenpläne", "gruppe": true,
+              "children": [
+                {
+                  "key": "bp.bg_situation", "label": "Situation 1:500",
+                  "children": [
+                    { "key": "bp.bg_situation_beglaubigt", "label": "beglaubigt", "typ": "janein" }
+                  ]
+                },
+                { "key": "bp.bg_grundrisse", "label": "Grundrisse 1:100" },
+                { "key": "bp.bg_fassaden", "label": "Fassadenpläne 1:100" },
+                {
+                  "key": "bp.bg_kanalisation", "label": "Kanalisation 1:100",
+                  "children": [
+                    { "key": "bp.bg_sickeranlage", "label": "Sickeranlage" },
+                    { "key": "bp.bg_retentionsanlage", "label": "Retentionsanlage" }
+                  ]
+                },
+                { "key": "bp.bg_umgebungsplan", "label": "Umgebungsplan" }
+              ]
+            },
+            { "key": "bp.bg_material_farbkonzept", "label": "Material-/Farbkonzept" },
+            { "key": "bp.bg_baubeschrieb", "label": "Baubeschrieb" }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "ausfuehrung",
+      "titel": "Ausführung",
+      "phase": true,
+      "items": [
+        {
+          "key": "af.fachplaner", "label": "Fachplaner", "gruppe": true,
+          "children": [
+            {
+              "key": "af.bauingenieur", "label": "Bauingenieur", "typ": "fachplaner",
+              "children": [
+                { "key": "af.vordimensionierung", "label": "Vordimensionierung erhalten", "typ": "janein" }
+              ]
+            },
+            { "key": "af.bauphysiker", "label": "Bauphysiker", "typ": "fachplaner" },
+            { "key": "af.heizungsplaner", "label": "Heizungsplaner", "typ": "fachplaner" },
+            { "key": "af.sanitaerplaner", "label": "Sanitärplaner", "typ": "fachplaner" },
+            { "key": "af.elektroplaner", "label": "Elektroplaner", "typ": "fachplaner" }
+          ]
+        },
+        { "key": "af.baubeschrieb_bkp", "label": "Baubeschrieb nach BKP" },
+        {
+          "key": "af.brouillonplaene", "label": "Brouillonpläne",
+          "children": [
+            { "key": "af.besprechung_bh", "label": "Besprechung Bauherrschaft", "typ": "datum" },
+            { "key": "af.besprechung_bkp", "label": "Besprechung Baubeschrieb nach BKP" }
+          ]
+        },
+        {
+          "key": "af.ausfuehrungsplaene", "label": "Def. Ausführungspläne", "gruppe": true,
+          "children": [
+            { "key": "af.ap_grundrisse", "label": "Grundrisse 1:50" },
+            { "key": "af.ap_kanalisation", "label": "Kanalisation 1:50" },
+            { "key": "af.ap_schnitte", "label": "Gebäudeschnitte 1:50" },
+            { "key": "af.ap_aushub", "label": "Aushubplan 1:50" },
+            { "key": "af.ap_treppe", "label": "Treppenplan 1:20" },
+            { "key": "af.ap_fassaden", "label": "Fassadenpläne 1:100" },
+            { "key": "af.ap_details", "label": "Detailpläne 1:20" },
+            { "key": "af.ap_sanitaer", "label": "Sanitärpläne 1:20" },
+            { "key": "af.ap_platten", "label": "Plattenpläne 1:20" }
+          ]
+        }
+      ]
+    }
+  ]
+}
