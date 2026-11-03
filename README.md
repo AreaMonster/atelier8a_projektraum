@@ -4,30 +4,62 @@ Internes Werkzeug zur Projektverfolgung: Projektliste, Stammdaten, Eckdaten Baur
 
 Technik: Next.js (TypeScript), SQLite-Datenbank über Prisma. Die App läuft auf einem Rechner im Büronetz und wird von Laptops und Tablets im Browser geöffnet.
 
-## Einrichtung (einmalig)
+## Installation und Start
 
-Voraussetzung: [Node.js](https://nodejs.org) ab Version 20 auf dem Server-Rechner.
+Voraussetzung: [Node.js](https://nodejs.org) ab Version 20 (LTS) auf dem Server-Rechner. Sonst ist nichts vorzubereiten.
 
-```bash
-npm install
-cp .env.example .env
-npm run setup
-npm run build
-```
+1. Projekt auf den Server holen, z. B. `git clone https://github.com/AreaMonster/atelier8a_projektraum.git` (oder als ZIP herunterladen und entpacken). Nicht in einen OneDrive-Ordner legen.
+2. Starten:
+   - **Windows:** Doppelklick auf **`Projektraum starten.bat`**
+   - **Linux/macOS:** `./start.sh`
+   - oder in jedem Terminal: `npm start`
 
-`npm run setup` legt die Datenbank `prisma/projektraum.db` an und fügt drei Beispielprojekte ein (nur wenn die Datenbank noch leer ist).
+Beim ersten Start wird automatisch alles Fehlende eingerichtet – das dauert einige Minuten und braucht Internetzugang:
 
-## Starten
+- `.env` wird aus `.env.example` angelegt
+- Abhängigkeiten werden installiert (`npm ci`)
+- die Datenbank `prisma/projektraum.db` wird angelegt (leer)
+- die App wird erstellt (`next build`)
 
-```bash
-npm run start
-```
+Bei späteren Starts geht es schnell: Installiert bzw. neu erstellt wird nur, was sich geändert hat (z. B. nach einem `git pull`). Neue Datenbank-Migrationen werden dabei automatisch übernommen, bestehende Daten bleiben erhalten.
 
-Die App ist danach unter `http://<Name-oder-IP-des-Servers>:3000` erreichbar, auf dem Server selbst unter http://localhost:3000.
+Die App ist danach unter `http://<Name-oder-IP-des-Servers>:3000` erreichbar, auf dem Server selbst unter http://localhost:3000. Ein anderer Port lässt sich über die Umgebungsvariable `PORT` wählen.
 
 - Unter Windows muss die Firewall eingehende Verbindungen auf Port 3000 erlauben (beim ersten Start fragt Windows in der Regel nach).
-- Damit die App nach einem Neustart des Servers automatisch läuft, kann `npm run start` z. B. über die Windows-Aufgabenplanung beim Systemstart ausgeführt werden.
+- Damit die App nach einem Neustart des Servers automatisch läuft, kann `Projektraum starten.bat` z. B. über die Windows-Aufgabenplanung beim Systemstart ausgeführt werden. Unter Linux dafür einen systemd-Dienst einrichten (siehe unten).
+- Beispielprojekte zum Ausprobieren: `npm run db:seed` (nur bei leerer Datenbank).
 - Zum Entwickeln: `npm run dev` (lädt Änderungen am Code sofort neu).
+
+### Linux: automatischer Start mit systemd
+
+Beispiel für einen Server, auf dem das Projekt unter `/opt/projektraum` liegt und der Benutzer `projektraum` es ausführt (Pfade und Benutzer anpassen). Datei `/etc/systemd/system/projektraum.service`:
+
+```ini
+[Unit]
+Description=Projektraum atelier8A AG
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=projektraum
+WorkingDirectory=/opt/projektraum
+ExecStart=/opt/projektraum/start.sh
+Environment=PORT=3000
+Restart=on-failure
+TimeoutStartSec=900
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Aktivieren und starten:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now projektraum
+```
+
+Status und Protokoll: `systemctl status projektraum` bzw. `journalctl -u projektraum -f`. Liegt Node.js nicht im Standardpfad (z. B. bei Installation über nvm), in `ExecStart` den vollen Pfad verwenden: `ExecStart=/pfad/zu/node /opt/projektraum/scripts/start.mjs`.
 
 ## Bedienung
 
