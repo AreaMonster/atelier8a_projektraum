@@ -62,6 +62,10 @@ Die gesamte Struktur der Eckdaten und Phasen steht in **`config/checkliste.json`
 
 Neue Punkte erscheinen in allen bestehenden Projekten als *offen*. Entfernte Punkte werden ausgeblendet, ihre Daten bleiben in der Datenbank erhalten. Ist die Datei fehlerhaft (z. B. ein Komma zu viel oder ein doppelter key), zeigt die App eine Fehlermeldung mit der betroffenen Stelle an.
 
+## Erscheinungsbild
+
+Das Design lehnt sich an atelier8a.ch an (Schrift Fira Sans Condensed, lokal eingebunden – kein Internetzugang nötig). Das Logo liegt unter **`public/logo.png`** (Kopfzeile und Druckansicht) und kann dort durch eine neuere oder höher aufgelöste Datei ersetzt werden. Fehlt die Datei, wird das Logo typografisch nachgebildet.
+
 ## Datensicherung
 
 Alle Daten liegen in der Datei `prisma/projektraum.db`. Für eine Sicherung genügt es, diese Datei zu kopieren (am besten, während die App gestoppt ist).

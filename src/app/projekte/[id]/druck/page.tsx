@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import { DruckKnopf } from "@/components/DruckKnopf";
 import { KonfigFehler } from "@/components/KonfigFehler";
+import { Logo } from "@/components/Logo";
 import { EckdatenListe, Stammdaten } from "@/components/ProjektDaten";
 import { holeStruktur } from "@/lib/checkliste";
 import { formatDatum, formatDatumZeit, wertAlsText } from "@/lib/format";
@@ -42,7 +43,7 @@ export default async function Druckansicht({ params }: { params: Promise<{ id: s
 
       <div className="druck-blatt">
         <header className="druck-kopf">
-          <span className="marke">atelier8A AG</span>
+          <span className="logo logo-klein"><Logo /></span>
           <span>Projektraum · Projektblatt</span>
           <span>Stand {formatDatumZeit(new Date())}</span>
         </header>
